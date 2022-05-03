@@ -1,3 +1,5 @@
+## Original Repo at [doctors-assistant-app](https://github.com/aI-lab-glider/doctors-assistant-app)
+
 ## ❓What it is about?
 
 Doctor's assistant is a mobile application which supports psychiatrs in their work with patients. The project MVP is being developed as a part of Project Summer AILab&Glider event.
