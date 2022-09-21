@@ -5,9 +5,22 @@ import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../common/FontForgeIcon";
 
-const ButtonWithLabel = ({ style, onPress, size, color, icon, label }) => {
+const ButtonWithLabel = ({
+  style,
+  onPress,
+  size,
+  color,
+  icon,
+  label,
+  disabled,
+}) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={disabled ? 1 : 0.3}
+      style={[styles.button, style]}
+    >
       <View style={styles.menuIcon}>
         <FontForgeIcon
           name={icon}
@@ -45,6 +58,7 @@ const styles = StyleSheet.create({
 ButtonWithLabel.defaultProps = {
   style: {},
   color: Colors.PINK,
+  disabled: false,
 };
 
 ButtonWithLabel.propTypes = {
@@ -54,6 +68,7 @@ ButtonWithLabel.propTypes = {
   color: PropTypes.string,
   icon: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default ButtonWithLabel;

@@ -61,11 +61,17 @@ function PhysicalExaminationProvider({ children }) {
     }
     return result;
   };
-
+  const getPhysicalExaminationByPatientId = (id) => {
+    const result = database.getAllFromTable(TABLES.physical_examination);
+    return result.find(
+      (physicalExaminationData) => physicalExaminationData.id === id
+    );
+  };
   const value = {
     ...state,
     setPhysicalExamination,
     updatePhysicalExamination,
+    getPhysicalExaminationByPatientId,
   };
 
   return (

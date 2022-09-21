@@ -1,46 +1,76 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
-import * as DateTimePickerAndroid from "react-native";
-import FormError from "./FormError";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Colors, Typography } from "../../../constants/styles";
+import FormError from "./FormError";
 
-const DateInputForm = ({ name }) => {
-  const { setFieldValue, errors, touched } = useFormikContext();
-  const [date, setDate] = useState(new Date());
+const DateInputForm = ({ name, calculateDependentValue }) => {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState(null);
+  const {
+    setFieldTouched,
+    setFieldValue,
+    errors,
+    touched,
+  } = useFormikContext();
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
   };
 
-  const showMode = (currentMode) => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
   };
 
-  const showDatepicker = () => {
-    showMode("date");
+  const handleConfirm = (selectedDate) => {
+    console.warn("field set: ", name);
+    setDate(selectedDate);
+    setFieldValue(name, formatDate(selectedDate));
+    hideDatePicker();
+  };
+  const formatDate = (dateTime) => {
+    return `${dateTime.getDate()}-${
+      dateTime.getMonth() + 1
+    }-${dateTime.getFullYear()}`;
   };
 
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.container}>
-          <Button onPress={showDatepicker} title="Show date picker!" />
-          <Text>{(text) => setFieldValue(name, text)}</Text>
-        </View>
+        <TouchableOpacity
+          style={[styles.inputBox]}
+          onBlur={() => setFieldTouched(name)}
+          onPress={showDatePicker}
+        >
+          <TextInput
+            style={[styles.input]}
+            placeholderTextColor={Colors.PURPLE_LIGHT}
+            placeholder="Data urodzenia"
+            editable={false}
+            calculateDependentValue={calculateDependentValue}
+            value={date && formatDate(date)}
+          />
+        </TouchableOpacity>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
       </View>
       <FormError error={errors[name]} visible={touched[name]} />
     </>
   );
 };
-
+DateInputForm.defaultProps = {
+  calculateDependentValue: null,
+};
+DateInputForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  calculateDependentValue: PropTypes.func,
+};
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.GRAY_VERY_LIGHT,
@@ -53,16 +83,22 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   input: {
-    width: "60%",
+    width: "100%",
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_LIGHT,
     color: Colors.BLACK,
     borderBottomColor: Colors.PURPLE_LIGHT,
     borderBottomWidth: 2,
   },
+  inputBox: {
+    width: "60%",
+    fontSize: Typography.FONT_SIZE_14,
+    fontFamily: Typography.FONT_FAMILY_LIGHT,
+    marginLeft: 52,
+  },
 });
+
 DateInputForm.propTypes = {
   name: PropTypes.string.isRequired,
 };
-
 export default DateInputForm;

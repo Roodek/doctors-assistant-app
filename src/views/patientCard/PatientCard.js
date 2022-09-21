@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import PropTypes from "prop-types";
-import { Colors, Typography } from "../constants/styles";
-import FontForgeIcon from "../components/common/FontForgeIcon";
-import SubtitleLabelWithButton from "../components/patientCard/SubtitleLabelWithButton";
-import SubtitleLabel from "../components/patientCard/SubtitleLabel";
-import BottomMenu from "../components/patientCard/bottomMenu";
-import { calculateAge } from "../modules/utils/Calculators";
-import { PatientsContext } from "../modules/context/PatientsContext";
-import { BasicDataContext } from "../modules/context/BasicDataContext";
+import { Colors, Typography } from "../../constants/styles";
+import FontForgeIcon from "../../components/common/FontForgeIcon";
+import SubtitleLabelWithButton from "../../components/patientCard/SubtitleLabelWithButton";
+import SubtitleLabel from "../../components/patientCard/SubtitleLabel";
+import BottomMenu from "../../components/patientCard/bottomMenu";
+import { calculateAge } from "../../modules/utils/Calculators";
+import { PatientsContext } from "../../modules/context/PatientsContext";
+import { BasicDataContext } from "../../modules/context/BasicDataContext";
 
 const PatientCard = ({ navigation, route }) => {
   const { patientId, patientBasicDataId } = route.params;
@@ -70,6 +70,14 @@ const PatientCard = ({ navigation, route }) => {
                   style={styles.numberIcon}
                 />
                 <Text style={styles.patientNumber}>{patient.id}</Text>
+                {/*<TouchableOpacity onPress={onEdit} style={styles.button}>*/}
+                {/*  <FontForgeIcon*/}
+                {/*    name="pen"*/}
+                {/*    size={26}*/}
+                {/*    color={Colors.PINK}*/}
+                {/*    style={styles.nameIcon}*/}
+                {/*  />*/}
+                {/*</TouchableOpacity>*/}
               </View>
               <Text style={styles.fieldText}>Pesel: {patient.pesel}</Text>
               <Text style={styles.fieldText}>
@@ -142,7 +150,12 @@ const PatientCard = ({ navigation, route }) => {
         </ScrollView>
       </View>
       <View style={{ flex: 0.2 }}>
-        <BottomMenu style={styles.bottomMenu} />
+        <BottomMenu
+          navigation={navigation}
+          patientId={patientId}
+          patientsBasicDataId={patientBasicDataId}
+          style={styles.bottomMenu}
+        />
       </View>
     </View>
   );

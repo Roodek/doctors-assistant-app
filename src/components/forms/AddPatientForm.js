@@ -14,6 +14,7 @@ import {
 } from "../../modules/utils/Calculators";
 import formStyles from "../../constants/styles/formStyles";
 import * as Typography from "../../constants/styles/typography";
+import DateInputForm from "./fields/DateInputForm";
 
 const AddPatientForm = ({ handleChange, handleBlur, values }) => {
   return (
@@ -50,6 +51,12 @@ const AddPatientForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="numeric"
         calculateDependentValue={calculateDateOfBirthValue}
       />
+      {/*<DateInputForm*/}
+      {/*  name="date_of_birth"*/}
+      {/*  onChangeText={handleChange("date_of_birth")}*/}
+      {/*  value={values.date_of_birth || calculateDateOfBirthValue(values.pesel)}*/}
+      {/*  editable={false}*/}
+      {/*/>*/}
       <FormField
         name="date_of_birth"
         onChangeText={handleChange("date_of_birth")}
