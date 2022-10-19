@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const backAction = ({ navigation, navigationRouteName, message }) => ({
   beforeRemove: (e) => {
@@ -19,8 +20,13 @@ const backAction = ({ navigation, navigationRouteName, message }) => ({
         {
           text: "Przerwij",
           style: "destructive",
-          onPress: () => {
+          onPress: async () => {
             navigation.navigate(navigationRouteName);
+            // const patientId = await AsyncStorage.getItem("patientId");
+            // if (patientId) {
+            //   console.log(patientId);
+            //   callback(patientId);
+            // }
           },
         },
       ]);

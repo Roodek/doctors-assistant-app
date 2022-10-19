@@ -3,20 +3,19 @@ import PropTypes from "prop-types";
 import physicalExaminationReducer, {
   PHYSICAL_EXAMINATION_ACTIONS,
 } from "./PhysicalExaminationReducer";
-import patientsPhysicalExamination from "../../constants/data/patientsPhysicalExamination";
+//import patientsPhysicalExamination from "../../constants/data/patientsPhysicalExamination";
 import { database, TABLES } from "../database/database";
 
 export const PhysicalExaminationContext = createContext({
   patientsPhysicalExamination: [],
 });
 
-const initialState = { patientsPhysicalExamination };
+//const initialState = { patientsPhysicalExamination };
 
 function PhysicalExaminationProvider({ children }) {
-  const [state, dispatch] = useReducer(
-    physicalExaminationReducer,
-    initialState
-  );
+  const [state, dispatch] = useReducer(physicalExaminationReducer, {
+    patientsPhysicalExamination: [],
+  });
 
   useEffect(() => {
     const refreshPhysicalExamination = async () => {

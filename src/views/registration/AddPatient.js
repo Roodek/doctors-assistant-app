@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
+import { StyleSheet } from "react-native";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import personalDataValidationSchema from "../../constants/validationSchemas/personalDataValidationSchema";
 import { PatientsContext } from "../../modules/context/PatientsContext";
 import AddPatientForm from "../../components/forms/AddPatientForm";
@@ -16,6 +18,7 @@ import {
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
+import { Colors } from "../../constants/styles";
 
 const AddPatient = ({ navigation }) => {
   const { addPatient } = useContext(PatientsContext);
@@ -42,6 +45,7 @@ const AddPatient = ({ navigation }) => {
 
     patient.id = await addPatient(patient);
     if (patient.id) {
+      // await AsyncStorage.setItem("patientId", patient.id.toString());
       const basicData = initialBasicData;
       basicData.patient_id = patient.id;
       basicData.id = await setBasicData(basicData);
@@ -69,7 +73,7 @@ const AddPatient = ({ navigation }) => {
   };
 
   return (
-    <FormContainer title="Nowy Pacjent">
+    <FormContainer title="Nowy Pacjent" style={styles.formContainer}>
       <Formik
         initialValues={initialState}
         enableReinitialize
@@ -108,4 +112,13 @@ AddPatient.propTypes = {
   }).isRequired,
 };
 
+const styles = StyleSheet.create({
+  formContainer: {
+    flex: 1,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    paddingTop: 22,
+    paddingBottom: 22,
+  },
+});
 export default AddPatient;

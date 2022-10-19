@@ -1,36 +1,173 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
 
 import BottomMenu from "../../components/patientCard/bottomMenu";
 
-import { PatientsContext } from "../../modules/context/PatientsContext";
-import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import DataPicker from "../../components/common/DataPicker";
-import BasicData from "../registration/BasicData";
-import PhysicalExamination from "../registration/PhysicalExamination";
-import PsychiatricAssessment from "../registration/PsychiatricAssessment";
+import BasicDataHistory from "./patientHistory/BasicDataHistory";
+import PhysicalExaminationHistory from "./patientHistory/PhysicalExaminationHistory";
+import PsychiatricAssessmentHistory from "./patientHistory/PsychiatricAssessmentHistory";
+import { BasicDataContext } from "../../modules/context/BasicDataContext";
+import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
+import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 
 const PatientHistory = ({ navigation, route }) => {
+  const { patientId } = route.params;
+  const { patientsBasicData } = useContext(BasicDataContext);
+  const { patientsPhysicalExamination } = useContext(
+    PhysicalExaminationContext
+  );
+  const { patientsPsychiatricAssessment } = useContext(
+    PsychiatricAssessmentContext
+  );
+  const patientsBasicExaminations = patientsBasicData.filter(
+    (record) => record.patient_id === patientId
+  );
+
+  const physicalExaminations = patientsPhysicalExamination.filter(
+    (record) => record.patient_id === patientId
+  );
+  const psychiatricAssessments = patientsPsychiatricAssessment.filter(
+    (record) => record.patient_id === patientId
+  );
+  const basicDataDates = patientsBasicData
+    ? patientsBasicExaminations.map((record, i) => {
+        return {
+          key: i.toString(),
+          value: record.examination_date,
+          label: record.examination_date,
+        };
+      })
+    : [
+        {
+          key: "100",
+          value: "",
+          label: "",
+        },
+      ];
+  const physicalExaminationDates = physicalExaminations
+    ? patientsPhysicalExamination.map((record, i) => {
+        return {
+          key: i.toString(),
+          value: record.examination_date,
+          label: record.examination_date,
+        };
+      })
+    : [
+        {
+          key: "100",
+          value: "",
+          label: "",
+        },
+      ];
+  const psychiatricAssessmentDates = psychiatricAssessments
+    ? patientsPsychiatricAssessment.map((record, i) => {
+        return {
+          key: i.toString(),
+          value: record.examination_date,
+          label: record.examination_date,
+        };
+      })
+    : [
+        {
+          key: "100",
+          value: "",
+          label: "",
+        },
+      ];
+
+  const determineDates = (option) => {
+    if (option === "2") {
+      return basicDataDates;
+    }
+    if (option === "3") {
+      return physicalExaminationDates;
+    }
+    if (option === "4") {
+      return psychiatricAssessmentDates;
+    }
+    return [
+      {
+        key: "100",
+        value: "",
+        label: "",
+      },
+    ];
+  };
   const examinationOptions = [
-    { key: "Wywiad - informacje podstawowe", value: "1" },
-    { key: "Wywiad - Badanie fizykalne", value: "2" },
-    { key: "Badanie psychiatryczne", value: "3" },
+    { label: "", key: "", value: "1" },
+    {
+      label: "Wywiad - informacje podstawowe",
+      key: "Wywiad - informacje podstawowe",
+      value: "2",
+    },
+    {
+      label: "Wywiad - Badanie fizykalne",
+      key: "Wywiad - Badanie fizykalne",
+      value: "3",
+    },
+    {
+      label: "Badanie psychiatryczne",
+      key: "Badanie psychiatryczne",
+      value: "4",
+    },
   ];
-  const { patientId, patientBasicDataId } = route.params;
-  const dates = [{ key: "21-08-2022", value: "1", content: { obj: 1 } }];
-  const [selected, setSelected] = React.useState(examinationOptions[0]);
-  const [selectedDate, setSelectedDate] = React.useState(dates[0]);
-  console.log(patientId);
-  console.log(patientBasicDataId);
+
+  const [selectedExamination, setSelectedExamination] = React.useState(
+    examinationOptions[0]
+  );
+  const [selectedDate, setSelectedDate] = React.useState({});
+  const [dates, setDates] = React.useState([]);
   const changePick = (picked) => {
     const option = examinationOptions[parseInt(picked, 10) - 1];
-    setSelected(option);
+    setSelectedExamination(option);
+    setDates(determineDates(picked));
+    // setSelectedDate({
+    //   key: "100",
+    //   value: "",
+    //   label: "",
+    // });
   };
   const changeDate = (picked) => {
-    const option = dates[parseInt(picked, 10) - 1];
+    const option = dates.find((obj) => {
+      return obj.value === picked;
+    });
     setSelectedDate(option);
+  };
+  const renderCorrespondingView = () => {
+    if (selectedExamination.value === "1" || selectedDate.value === "") {
+      return <></>;
+    }
+    if (selectedExamination.value === "2") {
+      console.log("basic");
+      return (
+        <BasicDataHistory
+          patientId={patientId}
+          examinationDate={selectedDate}
+        />
+      );
+    }
+    if (selectedExamination.value === "3") {
+      console.log("physical");
+      return (
+        <PhysicalExaminationHistory
+          patientId={patientId}
+          examinationDate={selectedDate}
+        />
+      );
+    }
+    if (selectedExamination.value === "4") {
+      console.log("psychiatric");
+      return (
+        <PsychiatricAssessmentHistory
+          patientId={patientId}
+          examinationDate={selectedDate}
+        />
+      );
+    }
+    return <></>;
   };
   return (
     <View style={{ flex: 1 }}>
@@ -47,7 +184,7 @@ const PatientHistory = ({ navigation, route }) => {
                 <View style={styles.sicknessHistory}>
                   <Text style={styles.name}>Historia choroby</Text>
                   <DataPicker
-                    selected={selected}
+                    selected={selectedExamination}
                     options={examinationOptions}
                     onSelect={changePick}
                   />
@@ -61,6 +198,10 @@ const PatientHistory = ({ navigation, route }) => {
                   />
                 </View>
               </View>
+            </View>
+
+            <View pointerEvents="none" style={styles.renderedContainer}>
+              {renderCorrespondingView()}
             </View>
           </View>
         </ScrollView>
@@ -90,6 +231,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GRAY_VERY_LIGHT,
     borderTopRightRadius: 50,
     paddingTop: 26,
+  },
+  renderedContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+    alignContent: "stretch",
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+  },
+  disabledView: {
+    color: Colors.GRAY_DARK,
   },
   titleContainer: {
     flexDirection: "row",
@@ -155,7 +307,6 @@ PatientHistory.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       patientId: PropTypes.number.isRequired,
-      patientBasicDataId: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
 };

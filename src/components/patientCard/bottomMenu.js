@@ -20,7 +20,6 @@ const BottomMenu = ({
     console.log("++++");
     navigation.navigate("PatientHistory", {
       patientId,
-      patientBasicDataId,
     });
   };
   const onButtonPressedResults = () => {

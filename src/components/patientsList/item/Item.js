@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
 
 Item.defaultProps = {
   patientsBasicData: {
+    patient_id: -1,
     medications: "",
     hospitalization_times: 0,
   },

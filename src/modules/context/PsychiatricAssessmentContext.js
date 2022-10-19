@@ -3,21 +3,20 @@ import PropTypes from "prop-types";
 import psychiatricAssessmentReducer, {
   PSYCHIATRIC_ASSESSMENT_ACTIONS,
 } from "./PsychiatricAssessmentReducer";
-import patientsPsychiatricAssessment from "../../constants/data/patientsPsychiatricAssessment";
+//import patientsPsychiatricAssessment from "../../constants/data/patientsPsychiatricAssessment";
 import { database, TABLES } from "../database/database";
+import basicDataReducer from "./BasicDataContextReducer";
 
 export const PsychiatricAssessmentContext = createContext({
   patientsPsychiatricAssessment: [],
 });
 
-const initialState = { patientsPsychiatricAssessment };
+//const initialState = { patientsPsychiatricAssessment };
 
 function PsychiatricAssessmentProvider({ children }) {
-  const [state, dispatch] = useReducer(
-    psychiatricAssessmentReducer,
-    initialState
-  );
-
+  const [state, dispatch] = useReducer(psychiatricAssessmentReducer, {
+    patientsPsychiatricAssessment: [],
+  });
   useEffect(() => {
     const refreshPsychiatricAssessment = async () => {
       const psychiatricAssessment = await database.getAllFromTable(

@@ -2,32 +2,26 @@ import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
-import AppButton from "../../components/common/AppButton";
-import physicalExaminationValidationSchema from "../../constants/validationSchemas/physicalExaminationValidationSchema";
-import PhysicalExaminationForm from "../../components/forms/PhysicalExaminationForm";
-import FormContainer from "../../components/forms/FormContainer";
+// import AppButton from "../../components/common/AppButton";
+import PhysicalExaminationForm from "../../../components/forms/PhysicalExaminationForm";
+import FormContainer from "../../../components/forms/FormContainer";
+import { PhysicalExaminationContext } from "../../../modules/context/PhysicalExaminationContext";
+import physicalExaminationValidationSchema from "../../../constants/validationSchemas/physicalExaminationValidationSchema";
 
-const PhysicalExamination = ({ route, navigation }) => {
-  const { physicalExaminationId, psychiatricAssessmentId } = route.params;
+const PhysicalExaminationHistory = ({ patientId }) => {
   const { patientsPhysicalExamination, updatePhysicalExamination } = useContext(
     PhysicalExaminationContext
   );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const initialState = patientsPhysicalExamination.find(
-    (physicalExamination) => physicalExamination.id === physicalExaminationId
+    (physicalExamination) => physicalExamination.patient_id === patientId
   );
 
   const onButtonPressed = async (values) => {
     setNextButtonDisabled(true);
     const physicalExamination = values;
     const result = await updatePhysicalExamination(physicalExamination);
-    if (result) {
-      navigation.navigate("PsychiatricAssessment", {
-        psychiatricAssessmentId,
-      });
-    }
     // TODO: Show alert with info what is wrong
   };
 
@@ -51,11 +45,11 @@ const PhysicalExamination = ({ route, navigation }) => {
               handleBlur={handleBlur}
               handleChange={handleChange}
             />
-            <AppButton
-              icon="next_btn"
-              onPress={handleSubmit}
-              disabled={!isValid || isSubmitting || isNextButtonDisabled}
-            />
+            {/*<AppButton*/}
+            {/*  icon="next_btn"*/}
+            {/*  onPress={handleSubmit}*/}
+            {/*  disabled={!isValid || isSubmitting || isNextButtonDisabled}*/}
+            {/*/>*/}
           </>
         )}
       </Formik>
@@ -65,20 +59,12 @@ const PhysicalExamination = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 15,
+    paddingTop: 10,
   },
 });
 
-PhysicalExamination.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      physicalExaminationId: PropTypes.number.isRequired,
-      psychiatricAssessmentId: PropTypes.number.isRequired,
-    }),
-  }).isRequired,
+PhysicalExaminationHistory.propTypes = {
+  patientId: PropTypes.number.isRequired,
 };
 
-export default PhysicalExamination;
+export default PhysicalExaminationHistory;

@@ -2,15 +2,14 @@ import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
-import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
-import AppButton from "../../components/common/AppButton";
-import psychiatricAssessmentValidationSchema from "../../constants/validationSchemas/psychiatricAssessmentValidationSchema";
-import FormContainer from "../../components/forms/FormContainer";
-import PsychiatricAssessmentForm from "../../components/forms/PsychiatricAssessmentForm";
-import { Colors } from "../../constants/styles";
+import { PsychiatricAssessmentContext } from "../../../modules/context/PsychiatricAssessmentContext";
+import AppButton from "../../../components/common/AppButton";
+import psychiatricAssessmentValidationSchema from "../../../constants/validationSchemas/psychiatricAssessmentValidationSchema";
+import FormContainer from "../../../components/forms/FormContainer";
+import PsychiatricAssessmentForm from "../../../components/forms/PsychiatricAssessmentForm";
+import { Colors } from "../../../constants/styles";
 
-const PsychiatricAssessment = ({ route, navigation }) => {
-  const { psychiatricAssessmentId } = route.params;
+const PsychiatricAssessmentHistory = ({ patientId }) => {
   const {
     patientsPsychiatricAssessment,
     updatePsychiatricAssessment,
@@ -18,17 +17,13 @@ const PsychiatricAssessment = ({ route, navigation }) => {
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const initialState = patientsPsychiatricAssessment.find(
-    (psychiatricAssessment) =>
-      psychiatricAssessment.id === psychiatricAssessmentId
+    (psychiatricAssessment) => psychiatricAssessment.patient_id === patientId
   );
 
   const onButtonPressed = async (values) => {
     setNextButtonDisabled(true);
     const psychiatricAssessment = values;
     const result = await updatePsychiatricAssessment(psychiatricAssessment);
-    if (result) {
-      navigation.navigate("PatientsList");
-    }
     // TODO: Show alert with info what is wrong
   };
   return (
@@ -67,20 +62,12 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     backgroundColor: Colors.GRAY_VERY_LIGHT,
-    borderTopRightRadius: 50,
-    paddingTop: 22 + 15,
+    paddingTop: 10,
     paddingBottom: 22,
   },
 });
-PsychiatricAssessment.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      psychiatricAssessmentId: PropTypes.number.isRequired,
-    }),
-  }).isRequired,
+PsychiatricAssessmentHistory.propTypes = {
+  patientId: PropTypes.number.isRequired,
 };
 
-export default PsychiatricAssessment;
+export default PsychiatricAssessmentHistory;

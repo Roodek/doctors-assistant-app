@@ -16,7 +16,8 @@ const PatientCard = ({ navigation, route }) => {
   const { getBasicDataById } = useContext(BasicDataContext);
   const patient = getPatientById(patientId);
   const patientBasicData = getBasicDataById(patientBasicDataId);
-
+  console.log(patientBasicDataId);
+  console.log(patientBasicData);
   const patientNote = patient.note ? patient.note : "";
 
   const [textNote, setTextNote] = useState(

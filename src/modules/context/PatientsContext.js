@@ -80,11 +80,49 @@ function PatientsContextProvider({ children }) {
     });
   };
 
+  const deletePatientFromAllTables = async (id) => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+      // eslint-disable-next-line radix
+      const patientId = parseInt(id);
+      const resultPatients = await Builder()
+        .table(TABLES.patients)
+        .where("id", "=", patientId)
+        .delete();
+      const resultBasicData = await Builder()
+        .table(TABLES.patients_basic_data)
+        .where("patient_id", "=", patientId)
+        .delete();
+      const resultPhysicalExamination = await Builder()
+        .table(TABLES.physical_examination)
+        .where("patient_id", "=", patientId)
+        .delete();
+      const resultPsychiatricAssessment = await Builder()
+        .table(TABLES.psychiatric_assessment)
+        .where("patient_id", "=", patientId)
+        .delete();
+      console.log(
+        `Successfully delete object from ${TABLES.patients},
+      ${TABLES.patients_basic_data},
+      ${TABLES.physical_examination},
+      ${TABLES.psychiatric_assessment} with id ${patientId}`
+      );
+      return (
+        resultPatients &&
+        resultBasicData &&
+        resultPhysicalExamination &&
+        resultPsychiatricAssessment
+      );
+    } catch (e) {
+      throw e;
+    }
+  };
   const value = {
     ...state,
     addPatient,
     addNewDiagnosisResults,
     getPatientById,
+    deletePatientFromAllTables,
   };
 
   return (

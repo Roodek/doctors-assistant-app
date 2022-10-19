@@ -17,7 +17,7 @@ const DataPicker = ({ selected, options, onSelect }) => {
         {options.map((option) => {
           return (
             <Picker.Item
-              label={option.key}
+              label={option.label}
               value={option.value}
               key={option.key}
             />
@@ -60,11 +60,13 @@ DataPicker.propTypes = {
   selected: PropTypes.shape({
     key: PropTypes.string,
     value: PropTypes.string,
+    label: PropTypes.string,
   }),
   options: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,
       value: PropTypes.string,
+      label: PropTypes.string,
     })
   ),
   onSelect: PropTypes.func,

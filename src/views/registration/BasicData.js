@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
+import { StyleSheet } from "react-native";
+import View from "react-native-web/dist/vendor/react-native/Animated/components/AnimatedView";
 import AppButton from "../../components/common/AppButton";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import basicDataValidationSchema from "../../constants/validationSchemas/basicDataValidationSchema";
 import BasicDataForm from "../../components/forms/BasicDataForm";
 import FormContainer from "../../components/forms/FormContainer";
 import { parseFormFieldValuesToObject } from "../../modules/utils/Parsers";
+import { Colors } from "../../constants/styles";
 
 const BasicData = ({ route, navigation }) => {
   const {
@@ -43,7 +46,7 @@ const BasicData = ({ route, navigation }) => {
   };
 
   return (
-    <FormContainer title="Wywiad">
+    <FormContainer title="Wywiad" style={styles.formContainer}>
       <Formik
         initialValues={initialState}
         enableReinitialize
@@ -89,4 +92,23 @@ BasicData.propTypes = {
   }).isRequired,
 };
 
+const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: Colors.PURPLE,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    padding: 22,
+  },
+  formContainer: {
+    flex: 1,
+    backgroundColor: Colors.GRAY_VERY_LIGHT,
+    borderTopRightRadius: 50,
+    paddingTop: 22,
+    paddingBottom: 22,
+  },
+});
 export default BasicData;

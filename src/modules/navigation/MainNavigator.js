@@ -6,8 +6,6 @@ import PatientCard from "../../views/patientCard/PatientCard";
 import HeaderOptions from "./HeaderOptions";
 import RegistrationNavigator from "./registrationNavigator/RegistrationNavigator";
 import DiagnosisNavigator from "./diagnosisNavigator/DiagnosisNavigator";
-import PatientCardNavigator from "./patientCardNavigator/PatientCardNavigator";
-import BasicData from "../../views/registration/BasicData";
 import PatientHistory from "../../views/patientCard/PatientHistory";
 
 const Stack = createStackNavigator();
@@ -24,11 +22,6 @@ const MainNavigator = () => {
           component={PatientsList}
           options={{ title: "Lista pacjentów" }}
         />
-        {/*<Stack.Screen*/}
-        {/*  name="PatientCard"*/}
-        {/*  component={PatientCardNavigator}*/}
-        {/*  options={{ headerShown: false }}*/}
-        {/*/>*/}
         <Stack.Screen
           name="PatientCard"
           component={PatientCard}
