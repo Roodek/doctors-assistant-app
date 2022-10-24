@@ -16,6 +16,7 @@ const BasicData = ({ route, navigation }) => {
     basicDataId,
     physicalExaminationId,
     psychiatricAssessmentId,
+    register,
   } = route.params;
   const { patientsBasicData, updateBasicData } = useContext(BasicDataContext);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -36,10 +37,11 @@ const BasicData = ({ route, navigation }) => {
     );
     const result = await updateBasicData(basicData);
 
-    if (result) {
+    if (result && register) {
       navigation.navigate("PhysicalExamination", {
         physicalExaminationId,
         psychiatricAssessmentId,
+        register,
       });
     }
     // TODO: Show alert with info what is wrong
@@ -88,6 +90,7 @@ BasicData.propTypes = {
       basicDataId: PropTypes.number.isRequired,
       physicalExaminationId: PropTypes.number.isRequired,
       psychiatricAssessmentId: PropTypes.number.isRequired,
+      register: PropTypes.bool,
     }),
   }).isRequired,
 };

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
@@ -9,7 +8,11 @@ import PhysicalExaminationForm from "../../components/forms/PhysicalExaminationF
 import FormContainer from "../../components/forms/FormContainer";
 
 const PhysicalExamination = ({ route, navigation }) => {
-  const { physicalExaminationId, psychiatricAssessmentId } = route.params;
+  const {
+    physicalExaminationId,
+    psychiatricAssessmentId,
+    register,
+  } = route.params;
   const { patientsPhysicalExamination, updatePhysicalExamination } = useContext(
     PhysicalExaminationContext
   );
@@ -23,10 +26,14 @@ const PhysicalExamination = ({ route, navigation }) => {
     setNextButtonDisabled(true);
     const physicalExamination = values;
     const result = await updatePhysicalExamination(physicalExamination);
-    if (result) {
+    if (result && register) {
       navigation.navigate("PsychiatricAssessment", {
         psychiatricAssessmentId,
+        register,
       });
+    } else {
+      // eslint-disable-next-line react/prop-types
+      navigation.goBack();
     }
     // TODO: Show alert with info what is wrong
   };
@@ -63,12 +70,6 @@ const PhysicalExamination = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 15,
-  },
-});
-
 PhysicalExamination.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
@@ -77,6 +78,7 @@ PhysicalExamination.propTypes = {
     params: PropTypes.shape({
       physicalExaminationId: PropTypes.number.isRequired,
       psychiatricAssessmentId: PropTypes.number.isRequired,
+      register: PropTypes.bool,
     }),
   }).isRequired,
 };

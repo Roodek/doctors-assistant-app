@@ -3,8 +3,6 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
 
-import BottomMenu from "../../components/patientCard/bottomMenu";
-
 import DataPicker from "../../components/common/DataPicker";
 import BasicDataHistory from "./patientHistory/BasicDataHistory";
 import PhysicalExaminationHistory from "./patientHistory/PhysicalExaminationHistory";
@@ -22,10 +20,12 @@ const PatientHistory = ({ navigation, route }) => {
   const { patientsPsychiatricAssessment } = useContext(
     PsychiatricAssessmentContext
   );
+  console.log(patientsBasicData);
+  console.log(patientsPhysicalExamination);
+  console.log(patientsPsychiatricAssessment);
   const patientsBasicExaminations = patientsBasicData.filter(
     (record) => record.patient_id === patientId
   );
-
   const physicalExaminations = patientsPhysicalExamination.filter(
     (record) => record.patient_id === patientId
   );
@@ -48,13 +48,14 @@ const PatientHistory = ({ navigation, route }) => {
         },
       ];
   const physicalExaminationDates = physicalExaminations
-    ? patientsPhysicalExamination.map((record, i) => {
-        return {
-          key: i.toString(),
-          value: record.examination_date,
-          label: record.examination_date,
-        };
-      })
+    ? console.log(physicalExaminations)
+    // physicalExaminations.map((record, i) => {
+    //   return {
+    //     key: i.toString(),
+    //     value: record.examination_date,
+    //     label: record.examination_date,
+    //   };
+    // })
     : [
         {
           key: "100",
@@ -120,7 +121,7 @@ const PatientHistory = ({ navigation, route }) => {
   );
   const [selectedDate, setSelectedDate] = React.useState({});
   const [dates, setDates] = React.useState([]);
-  const changePick = (picked) => {
+  const changePick = async (picked) => {
     const option = examinationOptions[parseInt(picked, 10) - 1];
     setSelectedExamination(option);
     setDates(determineDates(picked));
@@ -131,16 +132,22 @@ const PatientHistory = ({ navigation, route }) => {
     // });
   };
   const changeDate = (picked) => {
-    const option = dates.find((obj) => {
-      return obj.value === picked;
-    });
-    setSelectedDate(option);
+    if (dates && dates.length > 0) {
+      const option = dates.find((obj) => {
+        return obj.value === picked;
+      });
+      setSelectedDate(option);
+    }
   };
   const renderCorrespondingView = () => {
-    if (selectedExamination.value === "1" || selectedDate.value === "") {
+    if (
+      selectedExamination.value === "1" ||
+      selectedDate.value === "" ||
+      selectedDate === {}
+    ) {
       return <></>;
     }
-    if (selectedExamination.value === "2") {
+    if (selectedExamination.value === "2" && selectedDate.value) {
       console.log("basic");
       return (
         <BasicDataHistory
@@ -149,7 +156,7 @@ const PatientHistory = ({ navigation, route }) => {
         />
       );
     }
-    if (selectedExamination.value === "3") {
+    if (selectedExamination.value === "3" && selectedDate.value) {
       console.log("physical");
       return (
         <PhysicalExaminationHistory
@@ -158,7 +165,7 @@ const PatientHistory = ({ navigation, route }) => {
         />
       );
     }
-    if (selectedExamination.value === "4") {
+    if (selectedExamination.value === "4" && selectedDate.value) {
       console.log("psychiatric");
       return (
         <PsychiatricAssessmentHistory
@@ -206,20 +213,13 @@ const PatientHistory = ({ navigation, route }) => {
           </View>
         </ScrollView>
       </View>
-      <View style={{ flex: 0.2 }}>
-        <BottomMenu
-          navigation={navigation}
-          style={styles.bottomMenu}
-          activeScreen="History"
-        />
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   backgroundContainer: {
-    flex: 0.8,
+    flex: 1,
     backgroundColor: Colors.PURPLE,
   },
   container: {

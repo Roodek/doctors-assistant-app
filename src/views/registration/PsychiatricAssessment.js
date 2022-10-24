@@ -10,7 +10,7 @@ import PsychiatricAssessmentForm from "../../components/forms/PsychiatricAssessm
 import { Colors } from "../../constants/styles";
 
 const PsychiatricAssessment = ({ route, navigation }) => {
-  const { psychiatricAssessmentId } = route.params;
+  const { psychiatricAssessmentId, register } = route.params;
   const {
     patientsPsychiatricAssessment,
     updatePsychiatricAssessment,
@@ -26,7 +26,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
     setNextButtonDisabled(true);
     const psychiatricAssessment = values;
     const result = await updatePsychiatricAssessment(psychiatricAssessment);
-    if (result) {
+    if (result && register) {
       navigation.navigate("PatientsList");
     }
     // TODO: Show alert with info what is wrong
@@ -79,6 +79,7 @@ PsychiatricAssessment.propTypes = {
   route: PropTypes.shape({
     params: PropTypes.shape({
       psychiatricAssessmentId: PropTypes.number.isRequired,
+      register: PropTypes.bool,
     }),
   }).isRequired,
 };

@@ -3,14 +3,11 @@ import PropTypes from "prop-types";
 import physicalExaminationReducer, {
   PHYSICAL_EXAMINATION_ACTIONS,
 } from "./PhysicalExaminationReducer";
-//import patientsPhysicalExamination from "../../constants/data/patientsPhysicalExamination";
 import { database, TABLES } from "../database/database";
 
 export const PhysicalExaminationContext = createContext({
   patientsPhysicalExamination: [],
 });
-
-//const initialState = { patientsPhysicalExamination };
 
 function PhysicalExaminationProvider({ children }) {
   const [state, dispatch] = useReducer(physicalExaminationReducer, {
@@ -66,11 +63,15 @@ function PhysicalExaminationProvider({ children }) {
       (physicalExaminationData) => physicalExaminationData.id === id
     );
   };
+  const getAllPhysicalExamination = () => {
+    return database.getAllFromTable(TABLES.physical_examination);
+  };
   const value = {
     ...state,
     setPhysicalExamination,
     updatePhysicalExamination,
     getPhysicalExaminationByPatientId,
+    getAllPhysicalExamination,
   };
 
   return (

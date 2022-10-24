@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
 import FontForgeIcon from "../../components/common/FontForgeIcon";
@@ -9,15 +9,24 @@ import BottomMenu from "../../components/patientCard/bottomMenu";
 import { calculateAge } from "../../modules/utils/Calculators";
 import { PatientsContext } from "../../modules/context/PatientsContext";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
+import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
+import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 
 const PatientCard = ({ navigation, route }) => {
   const { patientId, patientBasicDataId } = route.params;
   const { getPatientById } = useContext(PatientsContext);
-  const { getBasicDataById } = useContext(BasicDataContext);
+  const { patientsBasicData, getBasicDataById } = useContext(BasicDataContext);
+  const { patientsPhysicalExamination } = useContext(
+    PhysicalExaminationContext
+  );
+  const { patientsPsychiatricAssessment } = useContext(
+    PsychiatricAssessmentContext
+  );
+  console.log(patientsBasicData);
+  console.log(patientsPhysicalExamination);
+  console.log(patientsPsychiatricAssessment);
   const patient = getPatientById(patientId);
   const patientBasicData = getBasicDataById(patientBasicDataId);
-  console.log(patientBasicDataId);
-  console.log(patientBasicData);
   const patientNote = patient.note ? patient.note : "";
 
   const [textNote, setTextNote] = useState(

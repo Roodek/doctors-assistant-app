@@ -46,13 +46,13 @@ const Item = ({ onPress, patient, patientsBasicData }) => {
           }
         />
       </TouchableOpacity>
-      <CircleButton
-        icon="add"
-        size={32}
-        onPress={() => {}}
-        style={styles.addButton}
-        color={Colors.GREEN}
-      />
+      {/*<CircleButton*/}
+      {/*  icon="add"*/}
+      {/*  size={32}*/}
+      {/*  onPress={() => {}}*/}
+      {/*  style={styles.addButton}*/}
+      {/*  color={Colors.GREEN}*/}
+      {/*/>*/}
     </View>
   );
 };

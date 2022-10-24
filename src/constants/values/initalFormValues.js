@@ -53,7 +53,7 @@ export const initialBasicData = {
   diet_choice: "",
   diet: "",
   family_interview: "",
-  examination_date: getDateString(),
+  examination_date: "",
 };
 
 export const initialPhysicalExamination = {
@@ -107,7 +107,7 @@ export const initialPhysicalExamination = {
   muscle_strength_tension: true,
   nervous_meningeal_signs: "",
   nervous_focal_damage: "",
-  examination_date: getDateString(),
+  examination_date: "",
 };
 
 export const initialPsychiatricAssessment = {
@@ -197,5 +197,5 @@ export const initialPsychiatricAssessment = {
   murder_fantasies: "",
   murder_plans_choice: null,
   murder_plans: "",
-  examination_date: getDateString(),
+  examination_date: "",
 };

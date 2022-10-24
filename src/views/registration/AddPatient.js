@@ -19,6 +19,7 @@ import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
 import { Colors } from "../../constants/styles";
+import { getDateString } from "../../modules/utils/Date";
 
 const AddPatient = ({ navigation }) => {
   const { addPatient } = useContext(PatientsContext);
@@ -48,16 +49,19 @@ const AddPatient = ({ navigation }) => {
       // await AsyncStorage.setItem("patientId", patient.id.toString());
       const basicData = initialBasicData;
       basicData.patient_id = patient.id;
+      basicData.examination_date = getDateString();
       basicData.id = await setBasicData(basicData);
 
       const physicalExamination = initialPhysicalExamination;
       physicalExamination.patient_id = patient.id;
+      physicalExamination.examination_date = getDateString();
       physicalExamination.id = await setPhysicalExamination(
         physicalExamination
       );
 
       const psychiatricAssessment = initialPsychiatricAssessment;
       psychiatricAssessment.patient_id = patient.id;
+      psychiatricAssessment.examination_date = getDateString();
       psychiatricAssessment.id = await setPsychiatricAssessment(
         psychiatricAssessment
       );
@@ -67,6 +71,7 @@ const AddPatient = ({ navigation }) => {
           basicDataId: basicData.id,
           physicalExaminationId: physicalExamination.id,
           psychiatricAssessmentId: psychiatricAssessment.id,
+          register: true,
         });
       }
     }

@@ -8,14 +8,16 @@ import FormContainer from "../../../components/forms/FormContainer";
 import { PhysicalExaminationContext } from "../../../modules/context/PhysicalExaminationContext";
 import physicalExaminationValidationSchema from "../../../constants/validationSchemas/physicalExaminationValidationSchema";
 
-const PhysicalExaminationHistory = ({ patientId }) => {
+const PhysicalExaminationHistory = ({ patientId, examinationDate }) => {
   const { patientsPhysicalExamination, updatePhysicalExamination } = useContext(
     PhysicalExaminationContext
   );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   const initialState = patientsPhysicalExamination.find(
-    (physicalExamination) => physicalExamination.patient_id === patientId
+    (physicalExamination) =>
+      physicalExamination.patient_id === patientId &&
+      physicalExamination.examination_date === examinationDate
   );
 
   const onButtonPressed = async (values) => {
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
 
 PhysicalExaminationHistory.propTypes = {
   patientId: PropTypes.number.isRequired,
+  examination_date: PropTypes.string.isRequired,
 };
 
 export default PhysicalExaminationHistory;

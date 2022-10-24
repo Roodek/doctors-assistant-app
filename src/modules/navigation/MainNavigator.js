@@ -7,6 +7,9 @@ import HeaderOptions from "./HeaderOptions";
 import RegistrationNavigator from "./registrationNavigator/RegistrationNavigator";
 import DiagnosisNavigator from "./diagnosisNavigator/DiagnosisNavigator";
 import PatientHistory from "../../views/patientCard/PatientHistory";
+import BasicData from "../../views/registration/BasicData";
+import PhysicalExamination from "../../views/registration/PhysicalExamination";
+import PsychiatricAssessment from "../../views/registration/PsychiatricAssessment";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +47,27 @@ const MainNavigator = () => {
           component={PatientHistory}
           options={{
             title: "Historia",
+          }}
+        />
+        <Stack.Screen
+          name="BasicData"
+          component={BasicData}
+          options={{
+            title: "Dane podstawowe",
+          }}
+        />
+        <Stack.Screen
+          name="PhysicalExamination"
+          component={PhysicalExamination}
+          options={{
+            title: "Badanie fizykalne",
+          }}
+        />
+        <Stack.Screen
+          name="PsychiatricAssessment"
+          component={PsychiatricAssessment}
+          options={{
+            title: "Badanie psychiatryczne",
           }}
         />
       </Stack.Navigator>
