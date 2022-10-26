@@ -15,16 +15,16 @@ export const PsychiatricAssessmentContext = createContext({
 
 function PsychiatricAssessmentProvider({ children }) {
   const [state, dispatch] = useReducer(psychiatricAssessmentReducer, {
-    patientsPsychiatricAssessment: [],
+    psychiatricAssessments: [],
   });
   useEffect(() => {
     const refreshPsychiatricAssessment = async () => {
-      const psychiatricAssessment = await database.getAllFromTable(
+      const psychiatricAssessments = await database.getAllFromTable(
         TABLES.psychiatric_assessment
       );
       dispatch({
         type: PSYCHIATRIC_ASSESSMENT_ACTIONS.REFRESH,
-        payload: { psychiatricAssessment },
+        payload: { psychiatricAssessments },
       });
     };
 

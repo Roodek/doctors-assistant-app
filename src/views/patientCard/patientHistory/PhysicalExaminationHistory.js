@@ -9,17 +9,16 @@ import { PhysicalExaminationContext } from "../../../modules/context/PhysicalExa
 import physicalExaminationValidationSchema from "../../../constants/validationSchemas/physicalExaminationValidationSchema";
 
 const PhysicalExaminationHistory = ({ patientId, examinationDate }) => {
-  const { patientsPhysicalExamination, updatePhysicalExamination } = useContext(
+  const { physicalExaminations, updatePhysicalExamination } = useContext(
     PhysicalExaminationContext
   );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = patientsPhysicalExamination.find(
+  const initialState = physicalExaminations.find(
     (physicalExamination) =>
       physicalExamination.patient_id === patientId &&
       physicalExamination.examination_date === examinationDate
   );
-
   const onButtonPressed = async (values) => {
     setNextButtonDisabled(true);
     const physicalExamination = values;
@@ -30,12 +29,13 @@ const PhysicalExaminationHistory = ({ patientId, examinationDate }) => {
   return (
     <FormContainer>
       <Formik
-        initialValues={initialState}
         enableReinitialize
+        initialValues={initialState}
         validationSchema={physicalExaminationValidationSchema}
         onSubmit={(values) => onButtonPressed(values)}
       >
         {({
+          values,
           handleChange,
           handleSubmit,
           isValid,
@@ -46,6 +46,7 @@ const PhysicalExaminationHistory = ({ patientId, examinationDate }) => {
             <PhysicalExaminationForm
               handleBlur={handleBlur}
               handleChange={handleChange}
+              values={values}
             />
             {/*<AppButton*/}
             {/*  icon="next_btn"*/}
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
 
 PhysicalExaminationHistory.propTypes = {
   patientId: PropTypes.number.isRequired,
-  examination_date: PropTypes.string.isRequired,
+  examinationDate: PropTypes.string.isRequired,
 };
 
 export default PhysicalExaminationHistory;

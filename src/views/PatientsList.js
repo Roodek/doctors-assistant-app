@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { SearchBar } from "react-native-elements";
@@ -8,24 +8,14 @@ import FontForgeIcon from "../components/common/FontForgeIcon";
 import CircleButton from "../components/common/CircleButton";
 import { PatientsContext } from "../modules/context/PatientsContext";
 import { BasicDataContext } from "../modules/context/BasicDataContext";
-import { PhysicalExaminationContext } from "../modules/context/PhysicalExaminationContext";
-import { PsychiatricAssessmentContext } from "../modules/context/PsychiatricAssessmentContext";
 
 const MINIMUM_SEARCH_STRING_LENGTH = 3;
 const PatientsList = ({ navigation }) => {
   const { patients } = React.useContext(PatientsContext);
   const { patientsBasicData } = React.useContext(BasicDataContext);
-  const { patientsPhysicalExamination } = useContext(
-    PhysicalExaminationContext
-  );
-  const { patientsPsychiatricAssessment } = useContext(
-    PsychiatricAssessmentContext
-  );
   const [filteredPatients, setFilteredPatients] = useState(patients);
   const [search, setSearch] = useState("");
-  console.log(patientsBasicData);
-  console.log(patientsPhysicalExamination);
-  console.log(patientsPsychiatricAssessment);
+
   useEffect(() => {
     setFilteredPatients(patients);
     setSearch("");

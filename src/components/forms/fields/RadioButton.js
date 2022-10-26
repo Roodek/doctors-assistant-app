@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import FormError from "./FormError";
 import { Colors, Typography } from "../../../constants/styles";
 import FontForgeIcon from "../../common/FontForgeIcon";
 
-const RadioButton = ({ name, options, defaultOptionIndex }) => {
+const RadioButton = ({ name, options, defaultOption }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [optionChecked, setOptionChecked] = useState(defaultOptionIndex);
+  const [optionChecked, setOptionChecked] = useState(
+    options.indexOf(defaultOption)
+  );
   return (
     <>
       <View style={styles.container}>
@@ -79,13 +81,13 @@ const styles = StyleSheet.create({
   },
 });
 RadioButton.defaultProps = {
-  defaultOptionIndex: null,
+  defaultOption: null,
 };
 
 RadioButton.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  defaultOptionIndex: PropTypes.number,
+  defaultOption: PropTypes.string,
 };
 
 export default RadioButton;

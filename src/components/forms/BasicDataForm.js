@@ -21,6 +21,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.reason_of_report}
       />
       <Text style={styles.subtitleText}>Główne dolegliwości</Text>
       <FormField
@@ -31,6 +32,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.major_ailments}
       />
       <Text style={styles.subtitleText}>
         Obecność myśli i tendencji suicydalnych lub homicydalnych
@@ -39,6 +41,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         name="suicidal_thoughts_choice"
         leftText="Obecne"
         rightText="Nieobecne"
+        defaultOption={values.suicidal_thoughts_choice}
       />
       <FormField
         name="suicidal_thoughts"
@@ -48,6 +51,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.suicidal_thoughts}
       />
       <Text style={styles.subtitleText}>Inne dolegliwości</Text>
       <FormField
@@ -58,6 +62,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.other_ailments}
       />
       <Text style={styles.subtitleText}>Przebyte choroby i operacje</Text>
       <MultiChoice
@@ -67,6 +72,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
           "Zapalenia w obrębie CSN",
           "Epizody drgawkowe",
         ]}
+        selected={values.past_diseases_choice}
       />
       <FormField
         name="past_diseases"
@@ -76,6 +82,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.past_diseases}
       />
       <Text style={styles.subtitleText}>Przebieg dotychczasowego leczenia</Text>
       <Text style={styles.listItemFieldText}>
@@ -85,6 +92,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         name="past_psychiatric_treatment"
         leftText="leczył się"
         rightText="nie leczył się"
+        defaultOption={!!values.past_psychiatric_treatment}
       />
       <FillForm
         name="first_hospitalization"
@@ -93,17 +101,18 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         labelText="Pierwszy raz przyjęty w:"
         onBlur={handleBlur("first_hospitalization")}
         keyboardType="numeric"
-        editable={values.past_psychiatric_treatment !== false}
+        editable={!!values.past_psychiatric_treatment !== false}
+        value={values.first_hospitalization}
       />
       <FillForm
         name="hospitalization_times"
         onChangeText={handleChange("hospitalization_times")}
-        placeholder={values.past_psychiatric_treatment ? "ilość razy" : "0"}
+        placeholder={!!values.past_psychiatric_treatment ? "ilość razy" : "0"}
         labelText="Liczba hospitalizacji:      "
         onBlur={handleBlur("hospitalization_times")}
         keyboardType="numeric"
         editable={values.past_psychiatric_treatment !== false}
-        value={values.past_psychiatric_treatment === false ? "0" : null}
+        value={!!values.past_psychiatric_treatment === false ? "0" : `${values.hospitalization_times}`}
       />
       <Text style={styles.listItemFieldText}>{"> "} farmakoterapia</Text>
       <FormField
@@ -114,6 +123,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.pharmacotherapy}
       />
       <Text style={styles.listItemFieldText}>{"> "} psychoterapia</Text>
       <FormField
@@ -124,6 +134,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.psychotherapy}
       />
       <Text style={styles.listItemFieldText}>{"> "} terapia rodzin</Text>
       <FormField
@@ -134,6 +145,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.family_therapy}
       />
       <Text style={styles.subtitleText}>Stosowane leki</Text>
       <Text style={styles.commentFieldText}>
@@ -147,6 +159,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.medications}
       />
       <Text style={styles.subtitleText}>Uczulenia i osobnicze reakcje</Text>
       <FormField
@@ -157,6 +170,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.allergies}
       />
       <Text style={styles.subtitleText}>Ocena stanu społecznego</Text>
       <Text style={styles.listItemFieldText}>{"> "} higiena</Text>
@@ -168,6 +182,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.hygiene}
       />
       <Text style={styles.listItemFieldText}>{"> "} poziom wykształcenia</Text>
       <RadioButton
@@ -182,6 +197,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
           "habilitacja",
           "profesura",
         ]}
+        defaultOption={values.education_choice}
       />
       <FormField
         name="education"
@@ -191,6 +207,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.education}
       />
       <Text style={styles.listItemFieldText}>{"> "} status zawodowy</Text>
       <FormField
@@ -201,6 +218,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.professional_status}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} warunki socjalne, materialne, mieszkaniowe
@@ -213,11 +231,17 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.social_conditions}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} korzystanie z pomocy społecznej
       </Text>
-      <Select name="social_assistance_choice" leftText="tak" rightText="nie" />
+      <Select
+        name="social_assistance_choice"
+        leftText="tak"
+        rightText="nie"
+        defaultOption={values.social_assistance_choice}
+      />
       <FormField
         name="social_assistance"
         onChangeText={handleChange("social_assistance")}
@@ -226,6 +250,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.social_assistance}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} zmiany poziomu funkcjonowania społecznego
@@ -238,6 +263,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.social_level_changes}
       />
       <Text style={styles.subtitleText}>Wywiad rodzinny i rozwojowy</Text>
       <Text style={styles.listItemFieldText}>
@@ -251,6 +277,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.development_data}
       />
       <Text style={styles.listItemFieldText}>{"> "} sytuacja rodzinna</Text>
       <FormField
@@ -261,6 +288,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.family_situation}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} zmiany sytuacji rodzinnej na przestrzeni ostatnich lat
@@ -273,6 +301,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.family_situation_changes}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} relacje rodzinne z uwzględnieniem więzi i obszarów konfliktowych
@@ -285,6 +314,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.family_relationships}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} obciążenia dziedziczne
@@ -301,6 +331,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.hereditary_taint}
       />
       <Text style={styles.subtitleText}>Wywiad środowiskowy</Text>
       <Text style={styles.listItemFieldText}>
@@ -314,6 +345,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.physical_activity}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} samouszkodzenia w wywiadzie
@@ -326,6 +358,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.self_mutilation}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} narażenie na zagrożenie zawodowe
@@ -338,6 +371,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.occupational_exposure}
       />
       <Text style={styles.subtitleText}>Używki</Text>
       <Text style={styles.listItemFieldText}>{"> "} alkohol</Text>
@@ -349,6 +383,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.alcohol}
       />
       <Text style={styles.listItemFieldText}>{"> "} nikotyna</Text>
       <FormField
@@ -359,6 +394,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.nicotine}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} nielegalne substancje psychoaktywne
@@ -371,6 +407,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.psychoactive_substances}
       />
       <Text style={styles.subtitleText}>Dieta</Text>
       <RadioButton
@@ -390,6 +427,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
           "pacjent nie przestrzega zaleceń lekarskich co do diety",
           "dieta zgodna z wyznawaną religią i światopoglądem",
         ]}
+        defaultOption={values.diet_choice}
       />
       <FormField
         name="diet"
@@ -399,6 +437,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.diet}
       />
       <Text style={styles.subtitleText}>Wywiad od rodziny</Text>
       <FormField
@@ -409,6 +448,7 @@ const BasicDataForm = ({ handleChange, handleBlur, values }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.family_interview}
       />
     </>
   );
@@ -420,7 +460,43 @@ BasicDataForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   values: PropTypes.shape({
+    reason_of_report: PropTypes.string,
+    major_ailments: PropTypes.string,
+    suicidal_thoughts_choice: PropTypes.bool,
+    suicidal_thoughts: PropTypes.string,
+    other_ailments: PropTypes.string,
+    past_diseases_choice: PropTypes.string,
+    past_diseases: PropTypes.string,
     past_psychiatric_treatment: PropTypes.bool.isRequired,
+    first_hospitalization: PropTypes.string,
+    hospitalization_times: PropTypes.string,
+    pharmacotherapy: PropTypes.string,
+    psychotherapy: PropTypes.string,
+    family_therapy: PropTypes.string,
+    medications: PropTypes.string,
+    allergies: PropTypes.string,
+    hygiene: PropTypes.string,
+    education_choice: PropTypes.string,
+    education: PropTypes.string,
+    professional_status: PropTypes.string,
+    social_conditions: PropTypes.string,
+    social_assistance_choice: PropTypes.number,
+    social_assistance: PropTypes.string,
+    social_level_changes: PropTypes.string,
+    development_data: PropTypes.string,
+    family_situation: PropTypes.string,
+    family_situation_changes: PropTypes.string,
+    family_relationships: PropTypes.string,
+    hereditary_taint: PropTypes.string,
+    physical_activity: PropTypes.string,
+    self_mutilation: PropTypes.string,
+    occupational_exposure: PropTypes.string,
+    alcohol: PropTypes.string,
+    nicotine: PropTypes.string,
+    psychoactive_substances: PropTypes.string,
+    diet_choice: PropTypes.string,
+    diet: PropTypes.string,
+    family_interview: PropTypes.string,
   }).isRequired,
 };
 export default BasicDataForm;

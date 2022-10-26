@@ -13,12 +13,12 @@ const PhysicalExamination = ({ route, navigation }) => {
     psychiatricAssessmentId,
     register,
   } = route.params;
-  const { patientsPhysicalExamination, updatePhysicalExamination } = useContext(
+  const { physicalExaminations, updatePhysicalExamination } = useContext(
     PhysicalExaminationContext
   );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = patientsPhysicalExamination.find(
+  const initialState = physicalExaminations.find(
     (physicalExamination) => physicalExamination.id === physicalExaminationId
   );
 
@@ -47,6 +47,7 @@ const PhysicalExamination = ({ route, navigation }) => {
         onSubmit={(values) => onButtonPressed(values)}
       >
         {({
+          values,
           handleChange,
           handleSubmit,
           isValid,
@@ -57,6 +58,7 @@ const PhysicalExamination = ({ route, navigation }) => {
             <PhysicalExaminationForm
               handleBlur={handleBlur}
               handleChange={handleChange}
+              values={values}
             />
             <AppButton
               icon="next_btn"

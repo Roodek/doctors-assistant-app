@@ -6,9 +6,9 @@ import FormError from "./FormError";
 import { Colors, Typography } from "../../../constants/styles";
 import FontForgeIcon from "../../common/FontForgeIcon";
 
-const MultiChoice = ({ name, options }) => {
+const MultiChoice = ({ name, options, selected }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [optionsChecked, setOptionsChecked] = useState([]);
+  const [optionsChecked, setOptionsChecked] = useState(selected.split(";"));
   const fieldValue = optionsChecked.join(";");
 
   useEffect(() => {
@@ -89,9 +89,14 @@ const styles = StyleSheet.create({
   },
 });
 
+MultiChoice.defaultProps = {
+  selected: "",
+};
+
 MultiChoice.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selected: PropTypes.string,
 };
 
 export default MultiChoice;

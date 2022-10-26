@@ -15,16 +15,8 @@ import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricA
 const PatientCard = ({ navigation, route }) => {
   const { patientId, patientBasicDataId } = route.params;
   const { getPatientById } = useContext(PatientsContext);
-  const { patientsBasicData, getBasicDataById } = useContext(BasicDataContext);
-  const { patientsPhysicalExamination } = useContext(
-    PhysicalExaminationContext
-  );
-  const { patientsPsychiatricAssessment } = useContext(
-    PsychiatricAssessmentContext
-  );
-  console.log(patientsBasicData);
-  console.log(patientsPhysicalExamination);
-  console.log(patientsPsychiatricAssessment);
+  const { getBasicDataById } = useContext(BasicDataContext);
+
   const patient = getPatientById(patientId);
   const patientBasicData = getBasicDataById(patientBasicDataId);
   const patientNote = patient.note ? patient.note : "";

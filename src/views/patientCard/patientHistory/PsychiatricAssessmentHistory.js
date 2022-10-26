@@ -9,15 +9,16 @@ import FormContainer from "../../../components/forms/FormContainer";
 import PsychiatricAssessmentForm from "../../../components/forms/PsychiatricAssessmentForm";
 import { Colors } from "../../../constants/styles";
 
-const PsychiatricAssessmentHistory = ({ patientId }) => {
-  const {
-    patientsPsychiatricAssessment,
-    updatePsychiatricAssessment,
-  } = useContext(PsychiatricAssessmentContext);
+const PsychiatricAssessmentHistory = ({ patientId, examinationDate }) => {
+  const { psychiatricAssessments, updatePsychiatricAssessment } = useContext(
+    PsychiatricAssessmentContext
+  );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = patientsPsychiatricAssessment.find(
-    (psychiatricAssessment) => psychiatricAssessment.patient_id === patientId
+  const initialState = psychiatricAssessments.find(
+    (psychiatricAssessment) =>
+      psychiatricAssessment.patient_id === patientId &&
+      psychiatricAssessment.examination_date === examinationDate
   );
 
   const onButtonPressed = async (values) => {
@@ -35,6 +36,7 @@ const PsychiatricAssessmentHistory = ({ patientId }) => {
         onSubmit={(values) => onButtonPressed(values)}
       >
         {({
+          values,
           handleChange,
           handleSubmit,
           isValid,
@@ -45,12 +47,13 @@ const PsychiatricAssessmentHistory = ({ patientId }) => {
             <PsychiatricAssessmentForm
               handleChange={handleChange}
               handleBlur={handleBlur}
+              values={values}
             />
-            <AppButton
-              icon="next_btn"
-              onPress={handleSubmit}
-              disabled={!isValid || isSubmitting || isNextButtonDisabled}
-            />
+            {/* <AppButton */}
+            {/*  icon="next_btn" */}
+            {/*  onPress={handleSubmit} */}
+            {/*  disabled={!isValid || isSubmitting || isNextButtonDisabled} */}
+            {/* /> */}
           </>
         )}
       </Formik>
@@ -68,6 +71,7 @@ const styles = StyleSheet.create({
 });
 PsychiatricAssessmentHistory.propTypes = {
   patientId: PropTypes.number.isRequired,
+  examinationDate: PropTypes.string.isRequired,
 };
 
 export default PsychiatricAssessmentHistory;

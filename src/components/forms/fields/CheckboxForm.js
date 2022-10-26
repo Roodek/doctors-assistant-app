@@ -12,9 +12,9 @@ import FormError from "./FormError";
 import { Colors, Typography } from "../../../constants/styles";
 import FontForgeIcon from "../../common/FontForgeIcon";
 
-const CheckboxForm = ({ name, text, style }) => {
+const CheckboxForm = ({ name, text, style, defaultOption }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked, setChecked] = useState(!!defaultOption);
   const leftIcon = isChecked ? "checked" : "unchecked";
 
   return (
@@ -65,12 +65,14 @@ const styles = StyleSheet.create({
 
 CheckboxForm.defaultProps = {
   style: { marginRight: 15 },
+  defaultOption: null,
 };
 
 CheckboxForm.propTypes = {
   name: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   style: ViewPropTypes.style,
+  defaultOption: PropTypes.bool,
 };
 
 export default CheckboxForm;

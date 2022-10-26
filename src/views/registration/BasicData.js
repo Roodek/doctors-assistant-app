@@ -43,6 +43,9 @@ const BasicData = ({ route, navigation }) => {
         psychiatricAssessmentId,
         register,
       });
+    } else {
+      // eslint-disable-next-line react/prop-types
+      navigation.goBack();
     }
     // TODO: Show alert with info what is wrong
   };

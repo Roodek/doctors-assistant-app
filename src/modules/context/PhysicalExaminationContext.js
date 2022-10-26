@@ -6,12 +6,12 @@ import physicalExaminationReducer, {
 import { database, TABLES } from "../database/database";
 
 export const PhysicalExaminationContext = createContext({
-  patientsPhysicalExamination: [],
+  physicalExaminations: [],
 });
 
 function PhysicalExaminationProvider({ children }) {
   const [state, dispatch] = useReducer(physicalExaminationReducer, {
-    patientsPhysicalExamination: [],
+    physicalExaminations: [],
   });
 
   useEffect(() => {
@@ -57,21 +57,10 @@ function PhysicalExaminationProvider({ children }) {
     }
     return result;
   };
-  const getPhysicalExaminationByPatientId = (id) => {
-    const result = database.getAllFromTable(TABLES.physical_examination);
-    return result.find(
-      (physicalExaminationData) => physicalExaminationData.id === id
-    );
-  };
-  const getAllPhysicalExamination = () => {
-    return database.getAllFromTable(TABLES.physical_examination);
-  };
   const value = {
     ...state,
     setPhysicalExamination,
     updatePhysicalExamination,
-    getPhysicalExaminationByPatientId,
-    getAllPhysicalExamination,
   };
 
   return (

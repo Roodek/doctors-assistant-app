@@ -9,31 +9,31 @@ const psychiatricAssessmentReducer = (state, action) => {
       const {
         psychiatricAssessment: setPsychiatricAssessment,
       } = action.payload;
-      const { patientsPsychiatricAssessment } = state;
+      const { psychiatricAssessments } = state;
 
-      const psychiatricAssessmentIndex = state.patientsPsychiatricAssessment.findIndex(
+      const psychiatricAssessmentIndex = state.psychiatricAssessments.findIndex(
         (psychiatricAssessment) => {
           return psychiatricAssessment.id === setPsychiatricAssessment.id;
         }
       );
       if (psychiatricAssessmentIndex !== -1) {
-        patientsPsychiatricAssessment[
+        psychiatricAssessments[
           psychiatricAssessmentIndex
         ] = setPsychiatricAssessment;
       } else {
-        patientsPsychiatricAssessment.push(setPsychiatricAssessment);
+        psychiatricAssessments.push(setPsychiatricAssessment);
       }
 
       return {
         ...state,
-        patientsPsychiatricAssessment,
+        psychiatricAssessments,
       };
     }
     case PSYCHIATRIC_ASSESSMENT_ACTIONS.REFRESH: {
-      const { psychiatricAssessment } = action.payload;
+      const { psychiatricAssessments } = action.payload;
       return {
         ...state,
-        psychiatricAssessment,
+        psychiatricAssessments,
       };
     }
     default:

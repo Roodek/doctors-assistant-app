@@ -14,7 +14,7 @@ const Select = ({
   calculateDependentValueWhenFalse,
 }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [isChecked, setChecked] = useState(defaultOption);
+  const [isChecked, setChecked] = useState(!!defaultOption);
   const pressLeft = () => {
     setChecked(true);
     setFieldValue(name, true);

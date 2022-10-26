@@ -10,7 +10,6 @@ const PastPsychiatricTreatment = ({
   defaultOption,
 }) => {
   const { setFieldValue } = useFormikContext();
-
   const calculateDependentValueWhenFalse = () => {
     setFieldValue("hospitalization_times", "0");
   };

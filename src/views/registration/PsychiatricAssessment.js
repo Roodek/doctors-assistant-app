@@ -11,13 +11,12 @@ import { Colors } from "../../constants/styles";
 
 const PsychiatricAssessment = ({ route, navigation }) => {
   const { psychiatricAssessmentId, register } = route.params;
-  const {
-    patientsPsychiatricAssessment,
-    updatePsychiatricAssessment,
-  } = useContext(PsychiatricAssessmentContext);
+  const { psychiatricAssessments, updatePsychiatricAssessment } = useContext(
+    PsychiatricAssessmentContext
+  );
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-  const initialState = patientsPsychiatricAssessment.find(
+  const initialState = psychiatricAssessments.find(
     (psychiatricAssessment) =>
       psychiatricAssessment.id === psychiatricAssessmentId
   );
@@ -28,6 +27,9 @@ const PsychiatricAssessment = ({ route, navigation }) => {
     const result = await updatePsychiatricAssessment(psychiatricAssessment);
     if (result && register) {
       navigation.navigate("PatientsList");
+    } else {
+      // eslint-disable-next-line react/prop-types
+      navigation.goBack();
     }
     // TODO: Show alert with info what is wrong
   };
@@ -40,6 +42,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
         onSubmit={(values) => onButtonPressed(values)}
       >
         {({
+          values,
           handleChange,
           handleSubmit,
           isValid,
@@ -50,6 +53,7 @@ const PsychiatricAssessment = ({ route, navigation }) => {
             <PsychiatricAssessmentForm
               handleChange={handleChange}
               handleBlur={handleBlur}
+              values={values}
             />
             <AppButton
               icon="next_btn"

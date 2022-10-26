@@ -14,25 +14,21 @@ import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricA
 const PatientHistory = ({ navigation, route }) => {
   const { patientId } = route.params;
   const { patientsBasicData } = useContext(BasicDataContext);
-  const { patientsPhysicalExamination } = useContext(
-    PhysicalExaminationContext
-  );
-  const { patientsPsychiatricAssessment } = useContext(
-    PsychiatricAssessmentContext
-  );
-  console.log(patientsBasicData);
-  console.log(patientsPhysicalExamination);
-  console.log(patientsPsychiatricAssessment);
+  const { physicalExaminations } = useContext(PhysicalExaminationContext);
+  const { psychiatricAssessments } = useContext(PsychiatricAssessmentContext);
+  // console.log(patientsBasicData);
+  // console.log(physicalExaminations);
+  // console.log(psychiatricAssessments);
   const patientsBasicExaminations = patientsBasicData.filter(
     (record) => record.patient_id === patientId
   );
-  const physicalExaminations = patientsPhysicalExamination.filter(
+  const patientsPhysicalExaminations = physicalExaminations.filter(
     (record) => record.patient_id === patientId
   );
-  const psychiatricAssessments = patientsPsychiatricAssessment.filter(
+  const patientsPsychiatricAssessments = psychiatricAssessments.filter(
     (record) => record.patient_id === patientId
   );
-  const basicDataDates = patientsBasicData
+  const basicDataDates = patientsBasicExaminations
     ? patientsBasicExaminations.map((record, i) => {
         return {
           key: i.toString(),
@@ -47,15 +43,14 @@ const PatientHistory = ({ navigation, route }) => {
           label: "",
         },
       ];
-  const physicalExaminationDates = physicalExaminations
-    ? console.log(physicalExaminations)
-    // physicalExaminations.map((record, i) => {
-    //   return {
-    //     key: i.toString(),
-    //     value: record.examination_date,
-    //     label: record.examination_date,
-    //   };
-    // })
+  const physicalExaminationDates = patientsPhysicalExaminations
+    ? patientsPhysicalExaminations.map((record, i) => {
+        return {
+          key: i.toString(),
+          value: record.examination_date,
+          label: record.examination_date,
+        };
+      })
     : [
         {
           key: "100",
@@ -63,8 +58,8 @@ const PatientHistory = ({ navigation, route }) => {
           label: "",
         },
       ];
-  const psychiatricAssessmentDates = psychiatricAssessments
-    ? patientsPsychiatricAssessment.map((record, i) => {
+  const psychiatricAssessmentDates = patientsPsychiatricAssessments
+    ? patientsPsychiatricAssessments.map((record, i) => {
         return {
           key: i.toString(),
           value: record.examination_date,
@@ -152,7 +147,7 @@ const PatientHistory = ({ navigation, route }) => {
       return (
         <BasicDataHistory
           patientId={patientId}
-          examinationDate={selectedDate}
+          examinationDate={selectedDate.value}
         />
       );
     }
@@ -161,7 +156,7 @@ const PatientHistory = ({ navigation, route }) => {
       return (
         <PhysicalExaminationHistory
           patientId={patientId}
-          examinationDate={selectedDate}
+          examinationDate={selectedDate.value}
         />
       );
     }
@@ -170,7 +165,7 @@ const PatientHistory = ({ navigation, route }) => {
       return (
         <PsychiatricAssessmentHistory
           patientId={patientId}
-          examinationDate={selectedDate}
+          examinationDate={selectedDate.value}
         />
       );
     }

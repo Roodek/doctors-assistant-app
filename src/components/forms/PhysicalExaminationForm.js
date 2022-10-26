@@ -8,14 +8,15 @@ import CheckboxForm from "./fields/CheckboxForm";
 import MultiChoice from "./fields/MultiChoice";
 import formStyles from "../../constants/styles/formStyles";
 
-const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
+const PhysicalExaminationForm = ({ handleChange, handleBlur, values }) => {
+    console.log(values);
   return (
     <>
       <Text style={styles.subtitleText}>Stan ogólny</Text>
       <RadioButton
         name="general_conditions"
         options={["dobry", "średni", "ciężki"]}
-        defaultOptionIndex={0}
+        defaultOption={values.general_conditions}
       />
       <Text style={styles.listItemFieldText}>{"> "} ciśnienie tętnicze</Text>
       <FormField
@@ -26,6 +27,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="phone-pad"
         multiline
         numberOfLines={2}
+        value={values.blood_pressure}
       />
       <Text style={styles.listItemFieldText}>{"> "} tętno</Text>
       <FormField
@@ -36,6 +38,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="numeric"
         multiline
         numberOfLines={2}
+        value={values.pulse}
       />
       <Text style={styles.listItemFieldText}>{"> "} ciepłota ciała</Text>
       <FormField
@@ -46,12 +49,13 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="numeric"
         multiline
         numberOfLines={2}
+        value={values.body_temperature}
       />
       <Text style={styles.subtitleText}>Budowa ciała</Text>
       <RadioButton
         name="body_build_type"
         options={["normosteniczna", "hyposteniczna", "hypersteniczna"]}
-        defaultOptionIndex={0}
+        defaultOption={values.body_build_type}
       />
       <Text style={styles.subtitleText}>Skóra i tkanka podskórna</Text>
       <Text style={styles.listItemFieldText}>{"> "} wygląd</Text>
@@ -63,6 +67,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.skin_appearance}
       />
       <Text style={styles.listItemFieldText}>{"> "} barwa</Text>
       <FormField
@@ -73,6 +78,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.skin_colour}
       />
       <Text style={styles.listItemFieldText}>{"> "} wilgotność</Text>
       <FormField
@@ -83,6 +89,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.skin_humidity}
       />
       <Text style={styles.listItemFieldText}>{"> "} obrzęki</Text>
       <FormField
@@ -93,6 +100,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.skin_swelling}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} blizny i ślady po samouszkodzeniach
@@ -105,6 +113,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.skin_scars}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} obwodowe węzły chłonne
@@ -113,7 +122,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         name="lymphatic_gland_examined"
         leftText="badalne"
         rightText="niebadalne"
-        defaultOption={false}
+        defaultOption={values.lymphatic_gland_examined}
       />
       <Text style={styles.subtitleText}>Głowa</Text>
       <Text style={styles.listItemFieldText}>{"> "} wygląd</Text>
@@ -121,6 +130,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         name="head_appearance_choice"
         text="wysklepiona symetrycznie, prawidłowo"
         style={styles.choice}
+        defaultOption={values.head_appearance_choice}
       />
       <FormField
         name="head_appearance"
@@ -130,6 +140,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.head_appearance}
       />
       <Text style={styles.listItemFieldText}>{"> "} bolesność opukowo</Text>
       <FormField
@@ -140,6 +151,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.head_percussion_tenderness}
       />
       <Text style={styles.listItemFieldText}>{"> "} gałki oczne</Text>
       <Text style={styles.commentFieldText}>
@@ -153,6 +165,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.head_eyeballs}
       />
       <Text style={styles.listItemFieldText}>{"> "} uszy</Text>
       <FormField
@@ -163,6 +176,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.ears}
       />
       <Text style={styles.listItemFieldText}>{"> "} nos</Text>
       <Text style={styles.commentFieldText}>(drożność, wycieki)</Text>
@@ -174,6 +188,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.nose}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} jama ustna i uzębienie
@@ -181,12 +196,13 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
       <RadioButton
         name="mouth_teeth"
         options={["nieuporządkowane", "uporządkowane", "zaprotezowane"]}
-        defaultOptionIndex={1}
+        defaultOption={values.mouth_teeth}
       />
       <Text style={styles.listItemFieldText}>{"> "} błony śluzowe</Text>
       <MultiChoice
         name="mucous_membrane_choice"
         options={["różowe", "wilgotne"]}
+        selected={values.mucous_membrane_choice}
       />
       <FormField
         name="mucous_membrane"
@@ -196,6 +212,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.mucous_membrane}
       />
       <Text style={styles.listItemFieldText}>{"> "} gardło i migdałki</Text>
       <FormField
@@ -206,6 +223,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.neck_throat_tonsil}
       />
       <Text style={styles.subtitleText}>Szyja</Text>
       <Text style={styles.listItemFieldText}>{"> "} wygląd</Text>
@@ -217,11 +235,13 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.neck_appearance}
       />
       <Text style={styles.listItemFieldText}>{"> "} tarczyca</Text>
       <MultiChoice
         name="neck_thyroid_choice"
         options={["powiększona", "niepowiększona", "ruchoma połykowo"]}
+        selected={values.neck_thyroid_choice}
       />
       <FormField
         name="neck_thyroid"
@@ -231,6 +251,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.neck_thyroid}
       />
       <Text style={styles.subtitleText}>Klatka piersiowa</Text>
       <MultiChoice
@@ -240,6 +261,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
           "wysklepiona niesymetrycznie",
           "ruchoma oddechowo",
         ]}
+        selected={values.chest_choice}
       />
       <FormField
         name="chest"
@@ -249,6 +271,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.chest}
       />
       <Text style={styles.listItemFieldText}>{"> "} częstość oddechów/min</Text>
       <FormField
@@ -259,11 +282,13 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="numeric"
         multiline
         numberOfLines={2}
+        value={values.breath_frequency}
       />
       <Text style={styles.listItemFieldText}>{"> "} opukiwanie</Text>
       <RadioButton
         name="chest_percussion_choice"
         options={["wypuk jawny", "wypuk stłumiony"]}
+        defaultOption={values.chest_percussion_choice}
       />
       <FormField
         name="chest_percussion"
@@ -273,12 +298,14 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.chest_percussion}
       />
       <Text style={styles.listItemFieldText}>{"> "} osłuchiwanie</Text>
       <CheckboxForm
         name="chest_auscultation_choice"
         text="nad polami płucnymi osłuchowo szmery oddechowe prawidłowe"
         style={styles.choice}
+        defaultOption={values.chest_auscultation_choice}
       />
       <FormField
         name="chest_auscultation"
@@ -288,6 +315,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.chest_auscultation}
       />
       <Text style={styles.subtitleText}>Układ krążenia</Text>
       <Text style={styles.listItemFieldText}>{"> "} oglądanie</Text>
@@ -302,6 +330,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.cardiovascular_appearance}
       />
       <Text style={styles.listItemFieldText}>{"> "} wydolny</Text>
       <FormField
@@ -312,6 +341,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.cardiovascular_efficient}
       />
       <Text style={styles.listItemFieldText}>{"> "} osłuchiwano</Text>
       <Text style={styles.commentFieldText}>
@@ -325,6 +355,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.cardiovascular_auscultation}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} tętno na tt. promieniowych i grzbietowych stopy zgodne z akcją
@@ -334,6 +365,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         name="cardiovascular_pulse_choice"
         leftText="tak"
         rightText="nie"
+        defaultOption={values.cardiovascular_pulse_choice}
       />
       <FormField
         name="cardiovascular_pulse"
@@ -343,6 +375,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.cardiovascular_pulse}
       />
       <Text style={styles.subtitleText}>Brzuch</Text>
       <RadioButton
@@ -352,7 +385,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
           "wysklepiony ponad poziom klp",
           "poniżej poziomu klp",
         ]}
-        defaultOptionIndex={0}
+        defaultOption={values.stomach}
       />
       <Text style={styles.listItemFieldText}>{"> "} przepukliny</Text>
       <FormField
@@ -363,6 +396,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.stomach_hernia}
       />
       <Text style={styles.listItemFieldText}>{"> "} niebolesny</Text>
       <FormField
@@ -373,6 +407,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.stomach_painless}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} osłuchowo perystaltyka
@@ -385,6 +420,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.stomach_auscultation}
       />
       <Text style={styles.listItemFieldText}>{"> "} opukiwanie</Text>
       <FormField
@@ -395,6 +431,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.stomach_percussion}
       />
       <Text style={styles.listItemFieldText}>{"> "} badanie dotykiem</Text>
       <Text style={styles.commentFieldText}>
@@ -408,6 +445,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.stomach_physical_examination}
       />
       <Text style={styles.listItemFieldText}>{"> "} objawy</Text>
       <Text style={styles.commentFieldText}>
@@ -421,6 +459,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.stomach_symptoms}
       />
       <Text style={styles.subtitleText}>Kończyny dolne</Text>
       <Text style={styles.listItemFieldText}>{"> "} obrzęki</Text>
@@ -432,6 +471,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.legs_swelling}
       />
       <Text style={styles.listItemFieldText}>{"> "} układ żylny</Text>
       <FormField
@@ -442,6 +482,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.legs_veins}
       />
       <Text style={styles.subtitleText}>Układ ruchowy</Text>
       <Text style={styles.listItemFieldText}>{"> "} obrysy stawów</Text>
@@ -449,7 +490,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         name="locomotor_joint_outline"
         leftText="prawidłowe"
         rightText="nieprawidłowe"
-        defaultOption
+        defaultOption={values.locomotor_joint_outline}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} ruchomość bierna i czynna w stawach kończyn
@@ -458,7 +499,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         name="locomotor_limb_mobility"
         leftText="prawidłowe"
         rightText="nieprawidłowe"
-        defaultOption
+        defaultOption={values.locomotor_limb_mobility}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} siła i napięcie mięśniowe
@@ -467,7 +508,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         name="muscle_strength_tension"
         leftText="prawidłowe"
         rightText="nieprawidłowe"
-        defaultOption
+        defaultOption={values.muscle_strength_tension}
       />
       <Text style={styles.subtitleText}>Układ nerwowy</Text>
       <Text style={styles.listItemFieldText}>{"> "} objawy oponowe</Text>
@@ -479,6 +520,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.nervous_meningeal_signs}
       />
       <Text style={styles.listItemFieldText}>
         {"> "} objawy ogniskowego uszkodzenia systemu nerwowego
@@ -491,6 +533,7 @@ const PhysicalExaminationForm = ({ handleChange, handleBlur }) => {
         keyboardType="default"
         multiline
         numberOfLines={2}
+        value={values.nervous_focal_damage}
       />
     </>
   );
@@ -501,6 +544,58 @@ const styles = formStyles;
 PhysicalExaminationForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    general_conditions: PropTypes.string,
+    blood_pressure: PropTypes.string,
+    pulse: PropTypes.string,
+    body_temperature: PropTypes.string,
+    body_build_type: PropTypes.string,
+    skin_appearance: PropTypes.string,
+    skin_colour: PropTypes.string,
+    skin_humidity: PropTypes.string,
+    skin_swelling: PropTypes.string,
+    skin_scars: PropTypes.string,
+    lymphatic_gland_examined: PropTypes.bool,
+    head_appearance_choice: PropTypes.bool,
+    head_appearance: PropTypes.string,
+    head_percussion_tenderness: PropTypes.string,
+    head_eyeballs: PropTypes.string,
+    ears: PropTypes.string,
+    nose: PropTypes.string,
+    mouth_teeth: PropTypes.string,
+    mucous_membrane_choice: PropTypes.string,
+    mucous_membrane: PropTypes.string,
+    neck_throat_tonsil: PropTypes.string,
+    neck_appearance: PropTypes.string,
+    neck_thyroid_choice: PropTypes.string,
+    neck_thyroid: PropTypes.string,
+    chest_choice: PropTypes.string,
+    chest: PropTypes.string,
+    breath_frequency: PropTypes.string,
+    chest_percussion_choice: PropTypes.string,
+    chest_percussion: PropTypes.string,
+    chest_auscultation_choice: PropTypes.bool,
+    chest_auscultation: PropTypes.string,
+    cardiovascular_appearance: PropTypes.string,
+    cardiovascular_efficient: PropTypes.string,
+    cardiovascular_auscultation: PropTypes.string,
+    cardiovascular_pulse_choice: PropTypes.bool,
+    cardiovascular_pulse: PropTypes.string,
+    stomach: PropTypes.string,
+    stomach_hernia: PropTypes.string,
+    stomach_painless: PropTypes.string,
+    stomach_auscultation: PropTypes.string,
+    stomach_percussion: PropTypes.string,
+    stomach_physical_examination: PropTypes.string,
+    stomach_symptoms: PropTypes.string,
+    legs_swelling: PropTypes.string,
+    legs_veins: PropTypes.string,
+    locomotor_joint_outline: PropTypes.bool,
+    locomotor_limb_mobility: PropTypes.bool,
+    muscle_strength_tension: PropTypes.bool,
+    nervous_meningeal_signs: PropTypes.string,
+    nervous_focal_damage: PropTypes.string,
+  }).isRequired,
 };
 
 export default PhysicalExaminationForm;

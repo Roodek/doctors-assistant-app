@@ -11,7 +11,11 @@ import {
 import PropTypes from "prop-types";
 import { Colors } from "../../constants/styles";
 import ButtonWithLabel from "./ButtonWithLabel";
-import { initialPhysicalExamination } from "../../constants/values/initalFormValues";
+import {
+  initialBasicData,
+  initialPhysicalExamination,
+  initialPsychiatricAssessment,
+} from "../../constants/values/initalFormValues";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
 import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
@@ -39,26 +43,43 @@ const BottomMenu = ({
   const onButtonPressedResults = () => {
     navigation.navigate("PatientResults", { patientId, patientBasicDataId });
   };
-  const addNewPsychiatricAssessment = () => {
+  const addNewPsychiatricAssessment = async () => {
     setModalVisible(false);
-    console.log("PsychiatricAssessment");
+    const psychiatricAssessment = initialPsychiatricAssessment;
+    psychiatricAssessment.patient_id = patientId;
+    psychiatricAssessment.examination_date = getDateString();
+    psychiatricAssessment.id = await setPsychiatricAssessment(
+      psychiatricAssessment
+    );
+    navigation.navigate("PsychiatricAssessment", {
+      psychiatricAssessmentId: psychiatricAssessment.id,
+      register: false,
+    });
   };
-  const addNewBasicData = () => {
+  const addNewBasicData = async () => {
     setModalVisible(false);
-    console.log("BasicData");
+    const basicData = initialBasicData;
+    basicData.patient_id = patientId;
+    basicData.examination_date = getDateString();
+    basicData.id = await setBasicData(basicData);
+    navigation.navigate("BasicData", {
+      basicDataId: basicData.id,
+      physicalExaminationId: -100,
+      psychiatricAssessmentId: -100,
+      register: false,
+    });
   };
   const addNewPhysicalExamination = async () => {
     setModalVisible(false);
     const physicalExamination = initialPhysicalExamination;
     physicalExamination.patient_id = patientId;
-    physicalExamination.id = await setPhysicalExamination(physicalExamination);
     physicalExamination.examination_date = getDateString();
+    physicalExamination.id = await setPhysicalExamination(physicalExamination);
     navigation.navigate("PhysicalExamination", {
       physicalExaminationId: physicalExamination.id,
       psychiatricAssessmentId: -100,
       register: false,
     });
-    console.log("PhysicalExamination");
   };
   return (
     <View style={styles.iconContainer}>
@@ -115,12 +136,12 @@ const BottomMenu = ({
         size={44}
         color={Colors.GREEN}
       />
-      <ButtonWithLabel
-        label="Wyniki"
-        onPress={onButtonPressedResults}
-        icon="results"
-        size={44}
-      />
+      {/*<ButtonWithLabel*/}
+      {/*  label="Wyniki"*/}
+      {/*  onPress={onButtonPressedResults}*/}
+      {/*  icon="results"*/}
+      {/*  size={44}*/}
+      {/*/>*/}
     </View>
   );
 };

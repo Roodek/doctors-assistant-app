@@ -7,31 +7,29 @@ const physicalExaminationReducer = (state, action) => {
   switch (action.type) {
     case PHYSICAL_EXAMINATION_ACTIONS.INSERT_OR_UPDATE: {
       const { physicalExamination: setPhysicalExamination } = action.payload;
-      const { patientsPhysicalExamination } = state;
+      const { physicalExaminations } = state;
 
-      const physicalExaminationIndex = state.patientsPhysicalExamination.findIndex(
+      const physicalExaminationIndex = state.physicalExaminations.findIndex(
         (physicalExamination) => {
           return physicalExamination.id === setPhysicalExamination.id;
         }
       );
       if (physicalExaminationIndex !== -1) {
-        patientsPhysicalExamination[
-          physicalExaminationIndex
-        ] = setPhysicalExamination;
+        physicalExaminations[physicalExaminationIndex] = setPhysicalExamination;
       } else {
-        patientsPhysicalExamination.push(setPhysicalExamination);
+        physicalExaminations.push(setPhysicalExamination);
       }
 
       return {
         ...state,
-        patientsPhysicalExamination,
+        physicalExaminations,
       };
     }
     case PHYSICAL_EXAMINATION_ACTIONS.REFRESH: {
-      const { physicalExamination } = action.payload;
+      const { physicalExaminations } = action.payload;
       return {
         ...state,
-        physicalExamination,
+        physicalExaminations,
       };
     }
     default:
