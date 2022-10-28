@@ -104,6 +104,7 @@ const insertObjectToTable = async (object, table) => {
 };
 
 const updateObjectFromTable = async (object, table) => {
+  console.log(`${object} ${table}`);
   try {
     const result = await Builder()
       .table(table)

@@ -22,11 +22,6 @@ const backAction = ({ navigation, navigationRouteName, message }) => ({
           style: "destructive",
           onPress: async () => {
             navigation.navigate(navigationRouteName);
-            // const patientId = await AsyncStorage.getItem("patientId");
-            // if (patientId) {
-            //   console.log(patientId);
-            //   callback(patientId);
-            // }
           },
         },
       ]);

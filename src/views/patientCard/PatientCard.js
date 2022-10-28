@@ -9,8 +9,6 @@ import BottomMenu from "../../components/patientCard/bottomMenu";
 import { calculateAge } from "../../modules/utils/Calculators";
 import { PatientsContext } from "../../modules/context/PatientsContext";
 import { BasicDataContext } from "../../modules/context/BasicDataContext";
-import { PhysicalExaminationContext } from "../../modules/context/PhysicalExaminationContext";
-import { PsychiatricAssessmentContext } from "../../modules/context/PsychiatricAssessmentContext";
 
 const PatientCard = ({ navigation, route }) => {
   const { patientId, patientBasicDataId } = route.params;
@@ -39,7 +37,9 @@ const PatientCard = ({ navigation, route }) => {
     }
   };
 
-  const onAdd = () => {};
+  const onAdd = () => {
+    navigation.navigate("PatientsNotes", { patientId: patient.id });
+  };
   const onDiagnosisAdd = () => {
     navigation.navigate("Diagnosis", { patientId: patient.id });
   };

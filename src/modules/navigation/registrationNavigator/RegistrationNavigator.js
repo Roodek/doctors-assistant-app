@@ -38,8 +38,6 @@ export const Routes = [
 const initialRoute = Routes[0];
 
 const RegistrationNavigator = () => {
-  // console.log(route);
-  // const { deletePatient } = route.params.deletePatientFromAllTables;
   return (
     <Stack.Navigator
       initialRouteName={initialRoute.name}

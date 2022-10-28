@@ -16,9 +16,6 @@ const PatientHistory = ({ navigation, route }) => {
   const { patientsBasicData } = useContext(BasicDataContext);
   const { physicalExaminations } = useContext(PhysicalExaminationContext);
   const { psychiatricAssessments } = useContext(PsychiatricAssessmentContext);
-  // console.log(patientsBasicData);
-  // console.log(physicalExaminations);
-  // console.log(psychiatricAssessments);
   const patientsBasicExaminations = patientsBasicData.filter(
     (record) => record.patient_id === patientId
   );
@@ -143,7 +140,6 @@ const PatientHistory = ({ navigation, route }) => {
       return <></>;
     }
     if (selectedExamination.value === "2" && selectedDate.value) {
-      console.log("basic");
       return (
         <BasicDataHistory
           patientId={patientId}
@@ -152,7 +148,6 @@ const PatientHistory = ({ navigation, route }) => {
       );
     }
     if (selectedExamination.value === "3" && selectedDate.value) {
-      console.log("physical");
       return (
         <PhysicalExaminationHistory
           patientId={patientId}
@@ -161,7 +156,6 @@ const PatientHistory = ({ navigation, route }) => {
       );
     }
     if (selectedExamination.value === "4" && selectedDate.value) {
-      console.log("psychiatric");
       return (
         <PsychiatricAssessmentHistory
           patientId={patientId}

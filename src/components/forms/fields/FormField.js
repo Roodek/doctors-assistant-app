@@ -26,7 +26,6 @@ const FormField = ({
       marginLeft: leftIcon ? 0 : 52,
     };
   };
-
   return (
     <>
       <View style={styles.container}>
@@ -39,10 +38,13 @@ const FormField = ({
           />
         )}
         <TextInput
+          name={name}
           style={[styles.input, leftMargin()]}
           placeholderTextColor={Colors.PURPLE_LIGHT}
           placeholder={placeholder}
-          onChangeText={(text) => setFieldValue(name, text)}
+          onChangeText={(text) => {
+            setFieldValue(name, text);
+          }}
           onBlur={() => setFieldTouched(name)}
           keyboardType={keyboardType}
           calculateDependentValue={calculateDependentValue}

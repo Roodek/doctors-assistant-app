@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import reducer, { PATIENT_ACTIONS } from "./PatientsContextReducer";
 import { database, TABLES } from "../database/database";
+import { PHYSICAL_EXAMINATION_ACTIONS } from "./PhysicalExaminationReducer";
 
 export const PatientsContext = createContext({
   patients: [],
@@ -74,12 +75,37 @@ function PatientsContextProvider({ children }) {
     });
   };
 
+  const updatePatient = async (patient) => {
+    const result = await database.updateObjectFromTable(
+      patient,
+      TABLES.patients
+    );
+    console.log(result);
+    if (result) {
+      dispatch({
+        type: PATIENT_ACTIONS.INSERT_OR_UPDATE,
+        payload: { patient },
+      });
+    }
+    return result;
+  };
+
   const getPatientById = (patientId) => {
     return state.patients.find((patient) => {
       return patient.id === patientId;
     });
   };
-
+  const getRawPatientData = (patientId) => {
+    const patient = JSON.parse(
+      JSON.stringify(
+        state.patients.find((rec) => {
+          return rec.id === patientId;
+        })
+      )
+    );
+    delete patient.diagnosis;
+    return patient;
+  };
   const deletePatientFromAllTables = async (id) => {
     // eslint-disable-next-line no-useless-catch
     try {
@@ -121,8 +147,10 @@ function PatientsContextProvider({ children }) {
     ...state,
     addPatient,
     addNewDiagnosisResults,
+    updatePatient,
     getPatientById,
     deletePatientFromAllTables,
+    getRawPatientData,
   };
 
   return (

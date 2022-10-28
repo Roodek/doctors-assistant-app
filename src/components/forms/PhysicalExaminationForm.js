@@ -9,7 +9,6 @@ import MultiChoice from "./fields/MultiChoice";
 import formStyles from "../../constants/styles/formStyles";
 
 const PhysicalExaminationForm = ({ handleChange, handleBlur, values }) => {
-    console.log(values);
   return (
     <>
       <Text style={styles.subtitleText}>Stan ogólny</Text>

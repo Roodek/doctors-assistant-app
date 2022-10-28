@@ -15,7 +15,7 @@ const BasicDataHistory = ({ patientId, examinationDate }) => {
       basicData.patient_id === patientId &&
       basicData.examination_date === examinationDate
   );
-  console.log(initialState.past_psychiatric_treatment);
+
   const keysWithParserFunctions = {
     hospitalization_times: (val) => parseInt(val, 10),
   };

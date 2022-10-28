@@ -10,6 +10,7 @@ import PatientHistory from "../../views/patientCard/PatientHistory";
 import BasicData from "../../views/registration/BasicData";
 import PhysicalExamination from "../../views/registration/PhysicalExamination";
 import PsychiatricAssessment from "../../views/registration/PsychiatricAssessment";
+import PatientsNotes from "../../views/patientCard/PatientsNotes";
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,13 @@ const MainNavigator = () => {
           component={PsychiatricAssessment}
           options={{
             title: "Badanie psychiatryczne",
+          }}
+        />
+        <Stack.Screen
+          name="PatientsNotes"
+          component={PatientsNotes}
+          options={{
+            title: "Notatki",
           }}
         />
       </Stack.Navigator>
