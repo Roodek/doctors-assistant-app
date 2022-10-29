@@ -8,9 +8,11 @@ import FontForgeIcon from "../../common/FontForgeIcon";
 
 const RadioButton = ({ name, options, defaultOption }) => {
   const { setFieldValue, errors, touched } = useFormikContext();
-  const [optionChecked, setOptionChecked] = useState(
-    options.indexOf(defaultOption)
-  );
+  const picked = options.indexOf(defaultOption);
+  if (defaultOption === "średni") {
+    console.log(`${options} ${picked} ${defaultOption}`);
+  }
+  const [optionChecked, setOptionChecked] = useState(picked);
   return (
     <>
       <View style={styles.container}>

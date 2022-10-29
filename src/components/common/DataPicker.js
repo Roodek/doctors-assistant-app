@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Picker } from "native-base";
+import { Picker } from "@react-native-picker/picker";
 import { Colors, Typography } from "../../constants/styles";
 
 const DataPicker = ({ selected, options, onSelect }) => {

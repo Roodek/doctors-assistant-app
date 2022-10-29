@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Colors, Typography } from "../../constants/styles";
@@ -16,6 +16,7 @@ const PatientHistory = ({ navigation, route }) => {
   const { patientsBasicData } = useContext(BasicDataContext);
   const { physicalExaminations } = useContext(PhysicalExaminationContext);
   const { psychiatricAssessments } = useContext(PsychiatricAssessmentContext);
+
   const patientsBasicExaminations = patientsBasicData.filter(
     (record) => record.patient_id === patientId
   );
@@ -111,6 +112,7 @@ const PatientHistory = ({ navigation, route }) => {
   const [selectedExamination, setSelectedExamination] = React.useState(
     examinationOptions[0]
   );
+  const [activeComponent, setActiveComponent] = React.useState(<></>);
   const [selectedDate, setSelectedDate] = React.useState({});
   const [dates, setDates] = React.useState([]);
   const changePick = async (picked) => {

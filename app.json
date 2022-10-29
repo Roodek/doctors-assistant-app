@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -24,7 +26,21 @@
     "description": "",
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "svg",
+        "ts",
+        "tsx"
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eba1337f-73ca-47a3-bcd5-079d08927674"
+      }
+    },
+    "android": {
+      "package": "com.roodek.doctorsassistant1"
     }
   }
 }
